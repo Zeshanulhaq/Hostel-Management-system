@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Footer from "./Components/Footer";
+import Header from "./Components/Header";
+import Home from "./Pages/Home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HostelSignupLogin from "./Pages/HostelSignupLogin";
+import Hostelprofilebuild from "./Pages/Hostelprofilebuild";
+import Hostelprofile from "./Pages/Hostelprofile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/HostelSignupLogin" element={<HostelSignupLogin />} />
+        <Route path="/Hostelprofilebuild" element={<Hostelprofilebuild />} />
+        <Route path="/Hostelprofile" element={<Hostelprofile />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
