@@ -1,5 +1,13 @@
 import React from "react";
 import background from "../assets/img/banner-9.jpg";
+import bg from "../assets/img/banner-10.jpg";
+import step1 from "../assets/img/step-1.png";
+import step2 from "../assets/img/step-2.png";
+import step3 from "../assets/img/step-3.png";
+
+import com1 from "../assets/img/com-1.jpg";
+import com2 from "../assets/img/com-2.jpg";
+import com7 from "../assets/img/com-7.jpg";
 
 const Home = () => {
   return (
@@ -60,7 +68,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div className="clearfix"></div>
+        <div className="clearfix"></div>
         <section>
           <div className="container">
             <div className="row">
@@ -76,11 +84,7 @@ const Home = () => {
               <div className="col-md-3 col-sm-6">
                 <div className="grid-view brows-job-list">
                   <div className="brows-job-company-img">
-                    <img
-                      src="assets/img/com-1.jpg"
-                      className="img-responsive"
-                      alt=""
-                    />
+                    <img src={com1} className="img-responsive" alt="" />
                   </div>
                   <div className="brows-job-position">
                     <h3>
@@ -118,11 +122,7 @@ const Home = () => {
               <div className="col-md-3 col-sm-6">
                 <div className="grid-view brows-job-list">
                   <div className="brows-job-company-img">
-                    <img
-                      src="assets/img/com-2.jpg"
-                      className="img-responsive"
-                      alt=""
-                    />
+                    <img src={com2} className="img-responsive" alt="" />
                   </div>
                   <div className="brows-job-position">
                     <h3>
@@ -162,11 +162,7 @@ const Home = () => {
               <div className="col-md-3 col-sm-6">
                 <div className="grid-view brows-job-list">
                   <div className="brows-job-company-img">
-                    <img
-                      src="assets/img/com-7.jpg"
-                      className="img-responsive"
-                      alt=""
-                    />
+                    <img src={com7} className="img-responsive" alt="" />
                   </div>
                   <div className="brows-job-position">
                     <h3>
@@ -208,7 +204,7 @@ const Home = () => {
         <section
           className="video-sec dark"
           id="video"
-          style="background-image:url(assets/img/banner-10.jpg);"
+          style={{ backgroundImage: `url(${bg})` }}
         >
           <div className="container">
             <div className="row">
@@ -222,7 +218,7 @@ const Home = () => {
             </div>
             <div className="video-part">
               <a
-                href="#"
+                href="/"
                 data-toggle="modal"
                 data-target="#my-video"
                 className="video-btn"
@@ -250,11 +246,7 @@ const Home = () => {
               <div className="col-md-4 col-sm-4">
                 <div className="working-process">
                   <span className="process-img">
-                    <img
-                      src="assets/img/step-1.png"
-                      className="img-responsive"
-                      alt=""
-                    />
+                    <img src={step1} className="img-responsive" alt="" />
                     <span className="process-num">01</span>
                   </span>
                   <h4>Create An Account</h4>
@@ -268,11 +260,7 @@ const Home = () => {
               <div className="col-md-4 col-sm-4">
                 <div className="working-process">
                   <span className="process-img">
-                    <img
-                      src="assets/img/step-2.png"
-                      className="img-responsive"
-                      alt=""
-                    />
+                    <img src={step2} className="img-responsive" alt="" />
                     <span className="process-num">02</span>
                   </span>
                   <h4>Search Jobs</h4>
@@ -286,11 +274,7 @@ const Home = () => {
               <div className="col-md-4 col-sm-4">
                 <div className="working-process">
                   <span className="process-img">
-                    <img
-                      src="assets/img/step-3.png"
-                      className="img-responsive"
-                      alt=""
-                    />
+                    <img src={step3} className="img-responsive" alt="" />
                     <span className="process-num">03</span>
                   </span>
                   <h4>Save & Apply</h4>
@@ -303,7 +287,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </section> */}
+        </section>
       </div>
     </>
   );

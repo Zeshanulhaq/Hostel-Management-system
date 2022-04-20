@@ -73,10 +73,7 @@ const Hostelprofilebuild = () => {
 
                 <div class="col-md-6 col-sm-6">
                   <div class="input-group">
-                    <select
-                      class="form-control input-lg"
-                      aria-placeholder="Select City"
-                    >
+                    <select class="form-control input-lg">
                       <option selected>Select city</option>
                       <option>Islamabad</option>
                       <option>lahore</option>

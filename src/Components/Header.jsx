@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logowt from "../assets/img/logo-white.png";
 
 const Header = () => {
@@ -16,10 +17,10 @@ const Header = () => {
             <i className="fa fa-bars"></i>
           </button>
           <div className="navbar-header">
-            <a className="navbar-brand" href="index-2.html">
-              <img src={logowt} className="logo logo-display" alt="" />
-              <img src={logowt} className="logo logo-scrolled" alt="" />
-            </a>
+            <Link className="navbar-brand" to="/">
+              <img src={logowt} className="logo logo-display" alt="job" />
+              <img src={logowt} className="logo logo-scrolled" alt="stock" />
+            </Link>
           </div>
           <div className="collapse navbar-collapse" id="navbar-menu">
             <ul
@@ -28,14 +29,14 @@ const Header = () => {
               data-out="fadeOutUp"
             >
               <li>
-                <a href="login.html">
+                <Link to="/">
                   <i aria-hidden="true"></i>About
-                </a>
+                </Link>
               </li>
 
               <li className="left-br">
                 <a
-                  href="javascript:void(0)"
+                  href="/"
                   data-toggle="modal"
                   data-target="#signup"
                   className="signin"
@@ -45,7 +46,7 @@ const Header = () => {
               </li>
               <li className="left-br">
                 <a
-                  href="javascript:void(0)"
+                  href="/"
                   data-toggle="modal"
                   data-target="#signup"
                   className="signin"
@@ -60,7 +61,7 @@ const Header = () => {
               data-out="fadeOutUp"
             >
               <li className="dropdown megamenu-fw">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                <a href="/" className="dropdown-toggle" data-toggle="dropdown">
                   Brows
                 </a>
                 <ul className="dropdown-menu megamenu-content" role="menu">
@@ -72,20 +73,20 @@ const Header = () => {
                         <div className="content">
                           <ul className="menu-col">
                             <li>
-                              <a href="index-3.html">Login</a>
+                              <Link to="/Stdsignin">Login</Link>
                             </li>
                             <li>
-                              <a href="index-4.html">Register</a>
+                              <Link to="/StdsignUp">Register</Link>
                             </li>
 
                             <li>
-                              <a href="index-6.html">Profile</a>
+                              <Link to="index-6.html">Profile</Link>
                             </li>
                             <li>
-                              <a href="freelancing.html">Search Hostel</a>
+                              <Link to="/Searchhostel">Search Hostel</Link>
                             </li>
                             <li>
-                              <a href="index-5.html">Logout</a>
+                              <Link to="index-5.html">Logout</Link>
                             </li>
                           </ul>
                         </div>
@@ -96,19 +97,21 @@ const Header = () => {
                         <div className="content">
                           <ul className="menu-col">
                             <li>
-                              <a href="browse-jobs.html">Login</a>
+                              <Link to="/HostelLogin">Login</Link>
                             </li>
                             <li>
-                              <a href="browse-company.html">Register</a>
+                              <Link to="/HostelSignup">Register</Link>
                             </li>
                             <li>
-                              <a href="create-resume.html">Build Portfolio</a>
+                              <Link to="/Hostelprofilebuild">
+                                Build Portfolio
+                              </Link>
                             </li>
                             <li>
-                              <a href="resume-detail.html">Profile</a>
+                              <Link to="/Hostelprofile">Profile</Link>
                             </li>
                             <li>
-                              <a href="#">Logout</a>
+                              <Link to="/">Logout</Link>
                             </li>
                           </ul>
                         </div>
@@ -133,7 +136,7 @@ const Header = () => {
                               <a href="resume-detail.html">Profile</a>
                             </li>
                             <li>
-                              <a href="#">Logout</a>
+                              <a href="/">Logout</a>
                             </li>
                           </ul>
                         </div>
@@ -143,10 +146,10 @@ const Header = () => {
                 </ul>
               </li>
               <li>
-                <a href="blog.html">Hostels</a>
+                <Link to="/hostelDetails">Hostels</Link>
               </li>
               <li>
-                <a href="blog.html">Contact</a>
+                <Link to="/Contactus">Contact</Link>
               </li>
             </ul>
           </div>
