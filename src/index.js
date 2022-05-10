@@ -2,11 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import { AuthContextProvider } from "./store/auth-context";
+import axios from "axios";
 
+const jwtToken = localStorage.getItem("jwt");
+
+axios.defaults.baseURL = "http://127.0.0.1:5000";
+axios.defaults.headers.common = { Authorization: `Bearer ${jwtToken}` };
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <AuthContextProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </AuthContextProvider>,
   document.getElementById("root")
 );
 

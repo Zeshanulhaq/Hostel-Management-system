@@ -1,59 +1,83 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import can1 from "../assets/img/can-1.png";
 import can2 from "../assets/img/can-2.png";
+import axios from "axios";
 
 import background from "../assets/img/banner-10.jpg";
+import { NavLink } from "react-router-dom";
 
 const Hostelprofile = () => {
+  const [hstldata, sethstldata] = useState("");
+  const [services, setservices] = useState("");
+  const [social, setsocial] = useState("");
+  const [comnts, setcomments] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("get/hostel/profile")
+      .then((response) => {
+        console.log(response.data.data);
+        sethstldata(response.data.data);
+        setservices(response.data.data.services);
+        setsocial(response.data.data.socialmedia);
+        setcomments(response.data.data.comments);
+        console.log(response.data.data.comments);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
   return (
     <>
-      <div class="Loader"></div>
-      <div class="wrapper">
+      <div className="Loader"></div>
+      <div className="wrapper">
         {/* <!-- Title Header Start --> */}
         <section
-          class="inner-header-title"
+          className="inner-header-title"
           style={{ backgroundImage: `url(${background})` }}
         >
-          <div class="container">
+          <div className="container">
             <h1>Hostel Profile</h1>
           </div>
         </section>
-        <div class="clearfix"></div>
+        <div className="clearfix"></div>
 
         {/* <!-- Candidate Profile Start --> */}
-        <section class="detail-desc advance-detail-pr gray-bg">
-          <div class="container white-shadow">
-            <div class="row">
-              <div class="detail-pic">
-                <img src={can2} class="img" alt="" />
-                <a href="#" class="detail-edit" title="edit">
-                  <i class="fa fa-pencil"></i>
+        <section className="detail-desc advance-detail-pr gray-bg">
+          <div className="container white-shadow">
+            <div className="row">
+              <div className="detail-pic">
+                <img src={hstldata.image} className="img" alt="" />
+                <a href="/" className="detail-edit" title="edit">
+                  <i className="fa fa-pencil"></i>
                 </a>
               </div>
             </div>
 
-            <div class="row bottom-mrg">
-              <div class="col-md-12 col-sm-12">
-                <div class="advance-detail detail-desc-caption">
-                  <h4>Adam Declizer</h4>
-                  <span class="designation">CEO & Founder (ownername)</span>
-                  <p>available/total seats</p>
+            <div className="row bottom-mrg">
+              <div className="col-md-12 col-sm-12">
+                <div className="advance-detail detail-desc-caption">
+                  <h4>{hstldata.hostel_name}</h4>
+                  <span className="designation">
+                    CEO & Founder {hstldata.ownername}
+                  </span>
+                  <p>{hstldata.rem_seats}</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <section class="full-detail-description full-detail gray-bg">
-          <div class="container">
-            <div class="col-md-12 col-sm-12">
-              <div class="full-card">
-                <div class="deatil-tab-employ tool-tab">
-                  <ul class="nav simple nav-tabs" id="simple-design-tab">
-                    <li class="active">
+        <section className="full-detail-description full-detail gray-bg">
+          <div className="container">
+            <div className="col-md-12 col-sm-12">
+              <div className="full-card">
+                <div className="deatil-tab-employ tool-tab">
+                  <ul className="nav simple nav-tabs" id="simple-design-tab">
+                    <li className="active">
                       <a href="#abouthostel">About</a>
                     </li>
                     <li>
-                      <a href="#address">Address</a>
+                      <NavLink to="#address">Address</NavLink>
                     </li>
                     <li>
                       <a href="#services">Services</a>
@@ -63,7 +87,7 @@ const Hostelprofile = () => {
                     </li>
                     <li>
                       <a href="#feedbacks">
-                        Feedbacks <span class="info-bar">6</span>
+                        Feedbacks <span className="info-bar">6</span>
                       </a>
                     </li>
                     <li>
@@ -71,27 +95,21 @@ const Hostelprofile = () => {
                     </li>
                   </ul>
                   {/* <!-- Start All Sec --> */}
-                  <div class="tab-content">
+                  <div className="tab-content">
                     {/* <!-- Start About Sec --> */}
-                    <div id="abouthostel" class="tab-pane fade in active">
+                    <div id="abouthostel" className="tab-pane fade in active">
                       <h3>About hostel</h3>
-                      <p>
-                        (write here about hostel)Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Nulla interdum sed diam ac
-                        fermentum. Mauris nec pellentesque neque. Cras nec diam
-                        euismod, congue sapien eu, fermentum libero. Vestibulum
-                        quis sem.
-                      </p>
+                      <p>{hstldata.about}</p>
                     </div>
                     {/* <!-- End About Sec --> */}
 
                     {/* <!-- Start Address Sec --> */}
-                    <div id="address" class="tab-pane fade">
+                    <div id="address" className="tab-pane fade">
                       <h3>Address Info</h3>
-                      <ul class="job-detail-des">
+                      <ul className="job-detail-des">
                         <li>
-                          <span>Address:</span>SCO 210, Neez Plaza (address of
-                          hostel)
+                          <span>Address:</span>
+                          {hstldata.address}
                         </li>
                         <li>
                           <span>City:</span>Mohali(hostel city)
@@ -102,70 +120,79 @@ const Hostelprofile = () => {
                         </li>
 
                         <li>
-                          <span>phone:</span>+91 123 456 7854 (hostel phone)
+                          <span>phone:</span>
+                          {hstldata.phone}
                         </li>
 
                         <li>
-                          <span>Email:</span>youremail@gmail.com
+                          <span>Email:</span>
+                          {hstldata.email}
                         </li>
                       </ul>
                     </div>
                     {/* <!-- End Address Sec --> */}
 
-                    <div id="services" class="tab-pane fade">
+                    <div id="services" className="tab-pane fade">
                       <h3>Hostel Services</h3>
-                      <ul class="job-detail-des">
+                      <ul className="job-detail-des">
                         <li>
-                          <span>wifi:</span>(wifi )
+                          <span>wifi:</span>
+                          {services.wifi}
                         </li>
                         <li>
-                          <span>mess:</span>(mess )
+                          <span>mess:</span>
+                          {services.mess}
                         </li>
                         <li>
-                          <span>chair/table:</span>(chair/hostel)
+                          <span>chair/table:</span>
+                          {services.chair_table}
                         </li>
                         <li>
-                          <span>geysar:</span>(geysar)
+                          <span>geysar:</span>
+                          {services.geysar}
                         </li>
                         <li>
-                          <span>AC:</span>(AC)
+                          <span>AC:</span>
+                          {services.AC}
                         </li>
                         <li>
                           <span>laundry:</span>
+                          {services.laundry}
                         </li>
                       </ul>
                     </div>
-                    <div id="socialmedia" class="tab-pane fade">
+                    <div id="scialmedia" className="tab-pane fade">
                       <h3>Social Media</h3>
-                      <ul class="job-detail-des">
+                      <ul className="job-detail-des">
                         <li>
-                          <span>Facebook:</span>(Facebook )
+                          <span>Facebook:</span> {social.facebook}
                         </li>
                         <li>
-                          <span>Website:</span>(Website )
+                          <span>Website:</span> {social.website}
                         </li>
                         <li>
-                          <span>Google:</span>(Google)
+                          <span>Google:</span>
+                          {social.google}
                         </li>
                         <li>
-                          <span>Tweeter:</span>(Tweeter)
+                          <span>Tweeter:</span> {social.tweeter}
                         </li>
                       </ul>
                     </div>
 
                     {/* <!-- Start Message --> */}
-                    <div id="feedbacks" class="tab-pane fade">
-                      <div class="inbox-body inbox-widget">
-                        <div class="mail-card">
+                    <div id="feedbacks" className="tab-pane fade">
+                      <div className="inbox-body inbox-widget">
+                        <div className="mail-card">
                           <header
-                            class="card-header cursor-pointer collapsed"
+                            className="card-header cursor-pointer collapsed"
                             data-toggle="collapse"
                             data-target="#full-message"
                             aria-expanded="false"
                           >
-                            <div class="card-title flexbox">
+                            <div className="card-title flexbox">
                               <img
-                                class="img-responsive img-circle avatar"
+                                className="img-responsive img-circle avatar"
                                 src={can1}
                                 alt="..."
                               />
@@ -174,7 +201,7 @@ const Hostelprofile = () => {
                                 <small>Today at 07:34 AM</small>
                                 <small>
                                   <a
-                                    class="text-info collapsed"
+                                    className="text-info collapsed"
                                     href="#detail-view"
                                     data-toggle="collapse"
                                     aria-expanded="false"
@@ -184,12 +211,14 @@ const Hostelprofile = () => {
                                 </small>
 
                                 <div
-                                  class="no-collapsing cursor-text collapse"
+                                  className="no-collapsing cursor-text collapse"
                                   id="detail-view"
                                   aria-expanded="false"
                                   //   style="height: 0px;"
                                 >
-                                  <small class="d-inline-block">From:</small>
+                                  <small className="d-inline-block">
+                                    From:
+                                  </small>
                                   <small>
                                     theadmin@thetheme.io(user email)
                                   </small>
@@ -198,12 +227,12 @@ const Hostelprofile = () => {
                             </div>
                           </header>
                           <div
-                            class="collapse"
+                            className="collapse"
                             id="full-message"
                             aria-expanded="false"
                             // style="height: 0px;"
                           >
-                            <div class="card-body">
+                            <div className="card-body">
                               <p>
                                 (message from user)Sed ut perspiciatis unde
                                 omnis iste natus error sit voluptatem
@@ -222,171 +251,171 @@ const Hostelprofile = () => {
                     {/* <!-- End Message --> */}
 
                     {/* <!-- Start Settings --> */}
-                    <div id="settings" class="tab-pane fade">
-                      <div class="row no-mrg">
+                    <div id="settings" className="tab-pane fade">
+                      <div className="row no-mrg">
                         <h3>Edit Profile</h3>
-                        <div class="edit-pro">
-                          <div class="col-md-4 col-sm-6">
+                        <div className="edit-pro">
+                          <div className="col-md-4 col-sm-6">
                             <label>User Name</label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="enter name"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>User Email</label>
                             <input
                               type="email"
-                              class="form-control"
+                              className="form-control"
                               placeholder="username@gmail.com"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>User Phone</label>
                             <input
                               type="number"
-                              class="form-control"
+                              className="form-control"
                               placeholder="+923445554"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>User Password</label>
                             <input
                               type="password"
-                              class="form-control"
+                              className="form-control"
                               placeholder="********"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Hostel Name</label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="Hostel name"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Hostel Email</label>
                             <input
                               type="email"
-                              class="form-control"
+                              className="form-control"
                               placeholder="hostel@gmail.com"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Hostel City</label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="enter city"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Hostel Address</label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="Hostel address"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Website address</label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="website address"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Facebook address </label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="address of Facebook"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>google address </label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="address of Facebook"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Tweeter address </label>
                             <input
                               type="text"
-                              class="form-control"
+                              className="form-control"
                               placeholder="address of Facebook"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>total seats</label>
                             <input
                               type="number"
-                              class="form-control"
+                              className="form-control"
                               placeholder="total seats"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Remaining seats</label>
                             <input
                               type="number"
-                              class="form-control"
+                              className="form-control"
                               placeholder="reamining seats"
                             />
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Chair/Table</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>Chair/Table</option>
                               <option>Yes</option>
                               <option>No</option>
                             </select>
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Gesyar</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>Gesyar</option>
                               <option>Yes</option>
                               <option>No</option>
                             </select>
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Laundry</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>Laundry</option>
                               <option>Yes</option>
                               <option>No</option>
                             </select>
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Mess</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>Mess</option>
                               <option>2 times</option>
                               <option>3 times</option>
                             </select>
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>AC</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>AC</option>
                               <option>Yes</option>
@@ -394,47 +423,47 @@ const Hostelprofile = () => {
                             </select>
                           </div>
 
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label> Generator</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>Generator</option>
                               <option>Yes</option>
                               <option>No</option>
                             </select>
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>Wifi</label>
                             <select
-                              class="form-control input-lg"
-                              aria-placeholder="Gesyar"
+                              className="form-control input-lg"
+                              placeholder="Gesyar"
                             >
                               <option selected>Wifi</option>
                               <option>Yes</option>
                               <option>No</option>
                             </select>
                           </div>
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>New Password</label>
                             <input
                               type="password"
-                              class="form-control"
+                              className="form-control"
                               placeholder="*********"
                             />
                           </div>
 
-                          <div class="col-md-4 col-sm-6">
+                          <div className="col-md-4 col-sm-6">
                             <label>About you</label>
                             <textarea
-                              class="form-control"
+                              className="form-control"
                               placeholder="Write Something"
                             ></textarea>
                           </div>
 
-                          <div class="col-sm-12">
-                            <button type="button" class="update-btn">
+                          <div className="col-sm-12">
+                            <button type="button" className="update-btn">
                               Update Now
                             </button>
                           </div>

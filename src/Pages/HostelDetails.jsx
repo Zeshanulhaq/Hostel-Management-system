@@ -1,58 +1,80 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import bg from "../assets/img/banner-10.jpg";
 import client1 from "../assets/img/client-1.jpg";
+import axios from "axios";
 
 const HostelDetails = () => {
+  const [hstldata, sethstldata] = useState("");
+  const [services, setservices] = useState("");
+  const [social, setsocial] = useState("");
+  const [comnts, setcomments] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("get/hostel/profile")
+      .then((response) => {
+        console.log(response.data.data);
+        sethstldata(response.data.data);
+        setservices(response.data.data.services);
+        setsocial(response.data.data.socialmedia);
+        setcomments(response.data.data.comments);
+        console.log(response.data.data.comments);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
+
   return (
     <>
-      <div class="Loader"></div>
-      <div class="wrapper">
-        <section class="inner-header-title" style={{ bg }}>
-          <div class="container">
-            <h1>Hostel Detail</h1>
+      <div className="Loader"></div>
+      <div className="wrapper">
+        <section className="inner-header-title" style={{ bg }}>
+          <div className="container">
+            <h1>{hstldata.hostel_name}</h1>
           </div>
         </section>
-        <div class="clearfix"></div>
+        <div className="clearfix"></div>
         {/* <!-- Title Header End --> */}
 
         {/* <!-- Resume Detail Start --> */}
-        <section class="detail-desc">
-          <div class="container white-shadow">
-            <div class="row mrg-0">
-              <div class="detail-pic">
-                <img src={client1} class="img" alt="" />
-                <a href="/" class="detail-edit" title="edit">
-                  <i class="fa fa-pencil"></i>
+        <section className="detail-desc">
+          <div className="container white-shadow">
+            <div className="row mrg-0">
+              <div className="detail-pic">
+                <img src={client1} className="img" alt="" />
+                <a href="/" className="detail-edit" title="edit">
+                  <i className="fa fa-pencil"></i>
                 </a>
               </div>
             </div>
-            <div class="row bottom-mrg mrg-0">
-              <div class="col-md-8 col-sm-8">
-                <div class="detail-desc-caption">
-                  <h4>hostel ownername</h4>
-                  <span class="designation">hostel name</span>
+            <div className="row bottom-mrg mrg-0">
+              <div className="col-md-8 col-sm-8">
+                <div className="detail-desc-caption">
+                  <h4>{hstldata.ownername} </h4>
+                  <span className="designation">{hstldata.hostel_name}</span>
                   <p>about this hostel.</p>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-4">
-                <div class="get-touch">
+              <div className="col-md-4 col-sm-4">
+                <div className="get-touch">
                   <h4>Get in Touch</h4>
                   <ul>
                     <li>
-                      <i class="fa fa-map-marker"></i>
-                      <span>hostel address</span>
+                      <i className="fa fa-map-marker"></i>
+                      <span>{hstldata.address} </span>
                     </li>
                     <li>
-                      <i class="fa fa-envelope"></i>
-                      <span>hostel@gmail.com</span>
+                      <i className="fa fa-envelope"></i>
+                      <span>{hstldata.email}</span>
                     </li>
                     <li>
-                      <i class="fa fa-phone"></i>
-                      <span>034344</span>
+                      <i className="fa fa-phone"></i>
+                      <span>{hstldata.phone} </span>
                     </li>
                     <li>
-                      <i class="fa fa-money"></i>
-                      <span>available seat</span>
+                      <i className="fa fa-money"></i>
+                      <span>{hstldata.rem_seats}</span>
                     </li>
                   </ul>
                 </div>
@@ -62,100 +84,109 @@ const HostelDetails = () => {
         </section>
         {/* <!-- Resume Detail End --> */}
 
-        <section class="full-detail-description full-detail">
-          <div class="container">
-            <div class="row row-bottom mrg-0">
-              <h2 class="detail-title">Services</h2>
+        <section className="full-detail-description full-detail">
+          <div className="container">
+            <div className="row row-bottom mrg-0">
+              <h2 className="detail-title">Services</h2>
 
-              <ul class="job-detail-des" style={{ color: "blue" }}>
+              <ul className="job-detail-des" style={{ color: "blue" }}>
                 <li>
-                  <span>wifi:</span>(wifi )
+                  <span>wifi:</span>
+                  {services.wifi}
                 </li>
                 <li>
-                  <span>mess:</span>(mess )
+                  <span>mess:</span>
+                  {services.mess}
                 </li>
                 <li>
-                  <span>chair/table:</span>(chair/hostel)
+                  <span>chair/table:</span>
+                  {services.chair_table}
                 </li>
                 <li>
-                  <span>geysar:</span>(geysar)
+                  <span>geysar:</span>
+                  {services.geysar}
                 </li>
                 <li>
-                  <span>AC:</span>(AC)
+                  <span>AC:</span>
+                  {services.AC}
                 </li>
                 <li>
                   <span>laundry:</span>
-                  {}
+                  {services.laundry}
                 </li>
               </ul>
             </div>
 
-            <div class="row row-bottom mrg-0">
-              <h2 class="detail-title">socialmedia</h2>
+            <div className="row row-bottom mrg-0">
+              <h2 className="detail-title">socialmedia</h2>
 
-              <ul class="job-detail-des" style={{ color: "blue" }}>
+              <ul className="job-detail-des" style={{ color: "blue" }}>
                 <li>
-                  <span>Facebook:</span>(Facebook )
+                  <span>Facebook:</span>
+                  {social.facebook}
                 </li>
                 <li>
-                  <span>Website:</span>(Website )
+                  <span>Website:</span>
+                  {social.website}
                 </li>
                 <li>
-                  <span>Google:</span>(Google)
+                  <span>Google:</span>
+                  {social.google}
                 </li>
                 <li>
-                  <span>Tweeter:</span>(Tweeter)
+                  <span>Tweeter:</span>
+                  {social.tweeter}
                 </li>
               </ul>
             </div>
           </div>
-          <section class="container">
-            <h2 class="detail-title">FeedBack</h2>
-            <div class="row no-mrg">
-              <div class="comments">
-                <div class="section-title2">
+          <section className="container">
+            <h2 className="detail-title">FeedBack</h2>
+            <div className="row no-mrg">
+              <div className="comments">
+                <div className="section-title2">
                   <h3>Comments</h3>
                 </div>
 
-                <div class="single-comment">
-                  <div class="img-holder">
-                    <img
-                      src="assets/img/blog/1.jpg"
-                      class="img-responsive"
-                      alt="1image"
-                    />
-                  </div>
-                  <div class="text-holder">
-                    <div class="top">
-                      <div class="name pull-left">
-                        <h4>Daniel Dax – Feb 10, 2017</h4>
+                {comnts.length > 0 &&
+                  comnts.map((comnt) => (
+                    <div className="single-comment" key={comnt.student_id}>
+                      <div className="img-holder">
+                        <img
+                          src="assets/img/blog/1.jpg"
+                          className="img-responsive"
+                          alt="1image"
+                        />
+                      </div>
+                      <div className="text-holder">
+                        <div className="top">
+                          <div className="name pull-left">
+                            <h4>
+                              {comnt.name} – {comnt.time}
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="text">
+                          <p>{comnt.feedback}</p>
+                        </div>
                       </div>
                     </div>
-                    <div class="text">
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  ))}
               </div>
             </div>
-            <div class="row no-mrg">
-              <div class="comments-form">
-                <div class="section-title2">
+            <div className="row no-mrg">
+              <div className="comments-form">
+                <div className="section-title2">
                   <h3>Comment</h3>
                 </div>
                 <form>
-                  <div class="col-md-12 col-sm-12">
+                  <div className="col-md-12 col-sm-12">
                     <textarea
-                      class="form-control"
+                      className="form-control"
                       placeholder="Comment"
                     ></textarea>
                   </div>
-                  <button class="thm-btn btn-comment" type="submit">
+                  <button className="thm-btn btn-comment" type="submit">
                     submit now
                   </button>
                 </form>

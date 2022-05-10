@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logowt from "../assets/img/logo-white.png";
+import AuthContext from "../store/auth-context";
 
 const Header = () => {
+  const authctx = useContext(AuthContext);
+
+  const isLoggedIn = authctx.isLoggedIn;
   return (
     <div>
       {/* Start Navigation  */}
@@ -34,25 +38,27 @@ const Header = () => {
                 </Link>
               </li>
 
+              {isLoggedIn && (
+                <li className="left-br">
+                  <Link
+                    to="/Hostelprofile"
+                    data-toggle="modal"
+                    data-target="#signup"
+                    className="signin"
+                  >
+                    Hostel Owner
+                  </Link>
+                </li>
+              )}
               <li className="left-br">
-                <a
-                  href="/"
-                  data-toggle="modal"
-                  data-target="#signup"
-                  className="signin"
-                >
-                  Hostel Owner
-                </a>
-              </li>
-              <li className="left-br">
-                <a
-                  href="/"
+                <Link
+                  to="/AdminDashboard"
                   data-toggle="modal"
                   data-target="#signup"
                   className="signin"
                 >
                   Admin portal
-                </a>
+                </Link>
               </li>
             </ul>
             <ul
@@ -99,6 +105,7 @@ const Header = () => {
                             <li>
                               <Link to="/HostelLogin">Login</Link>
                             </li>
+
                             <li>
                               <Link to="/HostelSignup">Register</Link>
                             </li>
@@ -107,9 +114,11 @@ const Header = () => {
                                 Build Portfolio
                               </Link>
                             </li>
+
                             <li>
                               <Link to="/Hostelprofile">Profile</Link>
                             </li>
+
                             <li>
                               <Link to="/">Logout</Link>
                             </li>
@@ -122,21 +131,21 @@ const Header = () => {
                         <div className="content">
                           <ul className="menu-col">
                             <li>
-                              <a href="browse-jobs.html">Login</a>
+                              <Link to="/AdminLogin">Login</Link>
                             </li>
                             <li>
-                              <a href="browse-company.html">Register</a>
+                              <Link to="/AdminSignUp">Register</Link>
                             </li>
                             <li>
-                              <a href="create-resume.html">
+                              <Link to="create-resume.html">
                                 View Hostel Rquests
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="resume-detail.html">Profile</a>
+                              <Link to="resume-detail.html">Profile</Link>
                             </li>
                             <li>
-                              <a href="/">Logout</a>
+                              <Link to="/">Logout</Link>
                             </li>
                           </ul>
                         </div>
