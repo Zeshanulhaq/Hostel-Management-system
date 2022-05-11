@@ -38,18 +38,17 @@ const Header = () => {
                 </Link>
               </li>
 
-              {isLoggedIn && (
-                <li className="left-br">
-                  <Link
-                    to="/Hostelprofile"
-                    data-toggle="modal"
-                    data-target="#signup"
-                    className="signin"
-                  >
-                    Hostel Owner
-                  </Link>
-                </li>
-              )}
+              <li className="left-br">
+                <Link
+                  to="/Hostelprofile"
+                  data-toggle="modal"
+                  data-target="#signup"
+                  className="signin"
+                >
+                  Hostel Owner
+                </Link>
+              </li>
+
               <li className="left-br">
                 <Link
                   to="/AdminDashboard"

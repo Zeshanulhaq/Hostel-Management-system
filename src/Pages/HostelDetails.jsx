@@ -4,6 +4,7 @@ import client1 from "../assets/img/client-1.jpg";
 import axios from "axios";
 
 const HostelDetails = () => {
+  const hstl_jwt_token = localStorage.getItem("jwt");
   const [hstldata, sethstldata] = useState("");
   const [services, setservices] = useState("");
   const [social, setsocial] = useState("");
@@ -11,7 +12,9 @@ const HostelDetails = () => {
 
   useEffect(() => {
     axios
-      .get("get/hostel/profile")
+      .get("get/hostel/profile", {
+        headers: { Authorization: `Bearer ${hstl_jwt_token}` },
+      })
       .then((response) => {
         console.log(response.data.data);
         sethstldata(response.data.data);
@@ -23,7 +26,7 @@ const HostelDetails = () => {
       .catch((error) => {
         console.error("There was an error!", error);
       });
-  }, []);
+  }, [hstl_jwt_token]);
 
   return (
     <>

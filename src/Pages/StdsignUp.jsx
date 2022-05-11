@@ -1,6 +1,33 @@
-import React from "react";
+import { useState } from "react";
+import axios from "axios";
 
 const StdsignUp = () => {
+  const [name, setname] = useState("");
+
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [Confirmpassword, setConfirmpassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("student/signup", {
+        name: name,
+        email: email,
+        password: password,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.warn(err));
+    console.log(name, email, password, Confirmpassword);
+
+    alert("Successfully Registered ");
+    setname("");
+    setemail("");
+    setpassword("");
+
+    setConfirmpassword("");
+  };
   return (
     <>
       <section class="login-plane-sec">
@@ -21,6 +48,8 @@ const StdsignUp = () => {
                           name="text"
                           type="email"
                           autofocus
+                          value={name}
+                          onChange={(e) => setname(e.target.value)}
                         />
                       </div>
                       <div class="form-group">
@@ -30,6 +59,8 @@ const StdsignUp = () => {
                           name="email"
                           type="email"
                           autofocus
+                          value={email}
+                          onChange={(e) => setemail(e.target.value)}
                         />
                       </div>
                       <div class="form-group">
@@ -38,13 +69,18 @@ const StdsignUp = () => {
                           placeholder="Password"
                           name="password"
                           type="password"
-                          value=""
+                          value={password}
+                          onChange={(e) => setpassword(e.target.value)}
                         />
                       </div>
 
                       {/* <!-- Change this to a button or input when using this as a form --> */}
-                      <a href="index-2.html" class="btn btn-login">
-                        LogIn
+                      <a
+                        href="index-2.html"
+                        class="btn btn-login"
+                        onClick={handleSubmit}
+                      >
+                        Signup
                       </a>
                     </fieldset>
                   </form>

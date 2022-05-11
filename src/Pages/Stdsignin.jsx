@@ -1,6 +1,39 @@
-import React from "react";
+import { useState } from "react";
 
 const Stdsignin = () => {
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const opt = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    };
+    try {
+      const resp = await fetch("http://127.0.0.1:5000/student/login", opt);
+
+      if (resp.status !== 200) {
+        alert("there was an error");
+        return false;
+      }
+      const data = await resp.json();
+
+      console.log("this came from the backend", data);
+      localStorage.setItem("std_jwt_token", data.access_token);
+
+      return true;
+    } catch (error) {
+      console.error("there was an error logging in");
+    }
+  };
+
   return (
     <>
       <section class="login-plane-sec">
@@ -21,6 +54,8 @@ const Stdsignin = () => {
                           name="email"
                           type="email"
                           autofocus
+                          value={email}
+                          onChange={(e) => setemail(e.target.value)}
                         />
                       </div>
                       <div class="form-group">
@@ -29,11 +64,16 @@ const Stdsignin = () => {
                           placeholder="Password"
                           name="password"
                           type="password"
-                          value=""
+                          value={password}
+                          onChange={(e) => setpassword(e.target.value)}
                         />
                       </div>
-                      <a href="index-2.html" class="btn btn-login">
-                        Sign Up
+                      <a
+                        href="index-2.html"
+                        class="btn btn-login"
+                        onClick={handleSubmit}
+                      >
+                        Login
                       </a>
                     </fieldset>
                   </form>

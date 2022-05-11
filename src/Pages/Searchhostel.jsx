@@ -1,7 +1,28 @@
-import React from "react";
+import axios from "axios";
+import { useState } from "react";
 import bgimage from "../assets/img/banner-10.jpg";
 
 const Searchhostel = () => {
+  const [city, setcity] = useState("");
+  const [hostelname, sethostelname] = useState("");
+  const [hstldata, sethstldata] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/search/hostel", {
+        city: city,
+        hostelname: hostelname,
+      })
+      .then((response) => {
+        console.log(response);
+        sethstldata(response.data.data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  };
+
   return (
     <>
       <section
@@ -27,6 +48,8 @@ const Searchhostel = () => {
                     type="text"
                     class="form-control"
                     placeholder="Keyword: Name, Tag"
+                    value={hostelname}
+                    onChange={(e) => sethostelname(e.target.value)}
                   />
                 </div>
                 <div class="col-md-3 col-sm-3">
@@ -34,6 +57,8 @@ const Searchhostel = () => {
                     type="text"
                     class="form-control"
                     placeholder="Location: City, State, Zip"
+                    value={city}
+                    onChange={(e) => setcity(e.target.value)}
                   />
                 </div>
                 <div class="col-md-3 col-sm-3">
@@ -48,7 +73,11 @@ const Searchhostel = () => {
                   </select>
                 </div>
                 <div class="col-md-2 col-sm-2">
-                  <button type="submit" class="btn btn-success full-width">
+                  <button
+                    onClick={handleSubmit}
+                    type="submit"
+                    class="btn btn-success full-width"
+                  >
                     Filter
                   </button>
                 </div>
@@ -60,41 +89,42 @@ const Searchhostel = () => {
           <a href="resume-detail.html" class="item-click">
             <article>
               <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-1.png"
-                        class="img-responsive"
-                        alt=""
-                      />
+                {hstldata.length > 0 &&
+                  hstldata.map((row) => (
+                    <div class="row no-mrg" key={row.id}>
+                      <div class="col-md-2 col-sm-2">
+                        <div class="brows-resume-pic">
+                          <img src={row.image} class="img-responsive" alt="" />
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                        <div class="brows-resume-name">
+                          <h4>{row.hostel_name}</h4>
+                          <span class="brows-resume-designation">
+                            {row.hostel_phone}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                        <div class="brows-resume-location">
+                          <p>
+                            <i class="fa fa-map-marker"></i>
+                            {row.address}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-2">
+                        <div class="browse-resume-rate">
+                          <span>
+                            Remaining Seats
+                            <br />
+                            {row.rem_seats}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Charles Hopman</h4>
-                      <span class="brows-resume-designation">
-                        App Developer
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> Street #210, Make New
-                        London
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$15/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
+                  ))}
+                {/* <div class="row extra-mrg row-skill">
                   <div class="browse-resume-skills">
                     <div class="col-md-9 col-sm-8">
                       <div class="br-resume">
@@ -111,410 +141,7 @@ const Searchhostel = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-2.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Alexander Weir</h4>
-                      <span class="brows-resume-designation">
-                        IOS Developer
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> Saint Paul, MN 55102
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$14/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 2.5 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-3.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Zara Clow</h4>
-                      <span class="brows-resume-designation">Web Designer</span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> MOLESWORTH VIC 3718
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$16/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 4 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-4.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Finn Osman</h4>
-                      <span class="brows-resume-designation">
-                        App Developer
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> JOHANNA VIC 3238
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$15.5/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 3.2 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-5.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Zane Joyner</h4>
-                      <span class="brows-resume-designation">
-                        PHP Developer
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> DOYLES CREEK NSW 2330
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$16/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 4 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-1.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Henry Crooks</h4>
-                      <span class="brows-resume-designation">
-                        UI/UX Designer
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> SOUTHERN BROOK WA 6401
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$18/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 5 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-2.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Taylah Axon</h4>
-                      <span class="brows-resume-designation">Html Expert</span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> WATERLOO QLD 4673
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$18/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 4.5 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </a>
-
-          <a href="resume-detail.html" class="item-click">
-            <article>
-              <div class="brows-resume">
-                <div class="row no-mrg">
-                  <div class="col-md-2 col-sm-2">
-                    <div class="brows-resume-pic">
-                      <img
-                        src="assets/img/can-3.png"
-                        class="img-responsive"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-name">
-                      <h4>Adam Gillwist</h4>
-                      <span class="brows-resume-designation">
-                        App Developer
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-sm-4">
-                    <div class="brows-resume-location">
-                      <p>
-                        <i class="fa fa-map-marker"></i> Street #210, Make New
-                        London
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-2 col-sm-2">
-                    <div class="browse-resume-rate">
-                      <span>
-                        <i class="fa fa-money"></i>$15/hour
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row extra-mrg row-skill">
-                  <div class="browse-resume-skills">
-                    <div class="col-md-9 col-sm-8">
-                      <div class="br-resume">
-                        <span>css</span>
-                        <span>html</span>
-                        <span>photoshop</span>
-                        <span>wordpress</span>
-                        <span>css</span>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4">
-                      <div class="browse-resume-exp">
-                        <span class="resume-exp">Exp. 3 Year</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </div> */}
               </div>
             </article>
           </a>

@@ -8,15 +8,18 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Typography } from "@mui/material";
 
+export default function GetApprovedHostels() {
+  const Admin_jwt_token = localStorage.getItem("admin_jwt");
 
-
-export default function Orders() {
   const [hstldata, sethstldata] = useState("");
 
   useEffect(() => {
     axios
-      .get("get/approved/hostels")
+      .get("get/approved/hostels", {
+        headers: { Authorization: `Bearer ${Admin_jwt_token}` },
+      })
       .then((response) => {
         console.log(response.data.data);
         sethstldata(response.data.data);
@@ -24,11 +27,12 @@ export default function Orders() {
       .catch((error) => {
         console.error("There was an error!", error);
       });
-  }, []);
+  }, [Admin_jwt_token]);
   return (
     <React.Fragment>
       <Table size="small">
         <TableHead>
+          <Typography variant="h3">Approved Hotels</Typography>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>phone</TableCell>
