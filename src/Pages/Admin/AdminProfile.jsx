@@ -1,0 +1,163 @@
+import * as React from "react";
+import { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+// import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
+
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       color="text.secondary"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
+
+const theme = createTheme();
+
+export default function AdminLogin() {
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [adminname, setadminname] = useState("");
+  const Admin_jwt_token = localStorage.getItem("admin_jwt");
+
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const opt = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authentication: `Bearer ${Admin_jwt_token}`,
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        adminname: adminname,
+      }),
+    };
+    try {
+      const resp = await fetch(
+        "http://127.0.0.1:5000//update/admin/profile",
+        opt
+      );
+
+      if (resp.status !== 200) {
+        alert("there was an error");
+        return false;
+      }
+      const data = await resp.json();
+
+      console.log("this came from the backend  of Admin", data);
+
+      return true;
+    } catch (error) {
+      console.error("there was an error logging in");
+    }
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container
+        // style={{ paddingTop: " 200px" }}
+        component="main"
+        maxWidth="xs"
+      >
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="adminname"
+              label="adminname"
+              type="adminname"
+              id="adminname"
+              autoComplete="current-adminname"
+              value={adminname}
+              onChange={(e) => setadminname(e.target.value)}
+            />
+            {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            /> */}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Update Profile
+            </Button>
+            {/* <Grid container>
+              <Grid item>
+                <Link to="/AdminSignUp" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid> */}
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
+}

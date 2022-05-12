@@ -1,18 +1,19 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { AuthContextProvider } from "./store/auth-context";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://127.0.0.1:5000";
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
   <AuthContextProvider>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </AuthContextProvider>,
-  document.getElementById("root")
+  </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

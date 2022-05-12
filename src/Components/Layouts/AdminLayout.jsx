@@ -3,12 +3,7 @@
 // import AdminDashboard from "../../Pages/Admin/AdminDashboard";
 
 // const AdminLayout = (props) => {
-//   return (
-//     <Router>
-//       <AdminDashboard />
-//       <Switch>{props.children}</Switch>
-//     </Router>
-//   );
+//   return
 // };
 
 // export default AdminLayout;

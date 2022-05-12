@@ -1,12 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import logowt from "../assets/img/logo-white.png";
-import AuthContext from "../store/auth-context";
 
 const Header = () => {
-  const authctx = useContext(AuthContext);
+  const std_jwt = localStorage.getItem("std_jwt_token");
+  const hstl_jwt = localStorage.getItem("jwt");
 
-  const isLoggedIn = authctx.isLoggedIn;
+  const history = useHistory();
+  const onstdLogout = () => {
+    localStorage.removeItem("std_jwt_token");
+    history.push("/");
+    window.location.reload(false);
+  };
+  const onhstllogout = () => {
+    localStorage.removeItem("jwt");
+    history.push("/HostelLogin");
+    window.location.reload(false);
+  };
+
   return (
     <div>
       {/* Start Navigation  */}
@@ -77,22 +89,22 @@ const Header = () => {
 
                         <div className="content">
                           <ul className="menu-col">
-                            <li>
-                              <Link to="/Stdsignin">Login</Link>
-                            </li>
-                            <li>
-                              <Link to="/StdsignUp">Register</Link>
-                            </li>
+                            {!std_jwt && (
+                              <li>
+                                <Link to="/Stdsignin">Login</Link>
+                              </li>
+                            )}
+                            {!std_jwt && (
+                              <li>
+                                <Link to="/StdsignUp">Register</Link>
+                              </li>
+                            )}
 
-                            <li>
+                            {/* <li>
                               <Link to="index-6.html">Profile</Link>
-                            </li>
-                            <li>
-                              <Link to="/Searchhostel">Search Hostel</Link>
-                            </li>
-                            <li>
-                              <Link to="index-5.html">Logout</Link>
-                            </li>
+                            </li> */}
+
+                            {std_jwt && <li onClick={onstdLogout}>Logout</li>}
                           </ul>
                         </div>
                       </div>
@@ -101,26 +113,35 @@ const Header = () => {
 
                         <div className="content">
                           <ul className="menu-col">
-                            <li>
-                              <Link to="/HostelLogin">Login</Link>
-                            </li>
+                            {!hstl_jwt && (
+                              <li>
+                                <Link to="HostelLogin">Login</Link>
+                              </li>
+                            )}
 
-                            <li>
-                              <Link to="/HostelSignup">Register</Link>
-                            </li>
-                            <li>
-                              <Link to="/Hostelprofilebuild">
-                                Build Portfolio
-                              </Link>
-                            </li>
+                            {!hstl_jwt && (
+                              <li>
+                                <Link to="/HostelSignup">Register</Link>
+                              </li>
+                            )}
+                            {hstl_jwt && (
+                              <li>
+                                <Link to="/Hostelprofilebuild">
+                                  Build Portfolio
+                                </Link>
+                              </li>
+                            )}
 
-                            <li>
-                              <Link to="/Hostelprofile">Profile</Link>
-                            </li>
-
-                            <li>
-                              <Link to="/">Logout</Link>
-                            </li>
+                            {hstl_jwt && (
+                              <li>
+                                <Link to="/Hostelprofile">Profile</Link>
+                              </li>
+                            )}
+                            {hstl_jwt && (
+                              <li onClick={onhstllogout}>
+                                <Link to="/">Logout</Link>
+                              </li>
+                            )}
                           </ul>
                         </div>
                       </div>
@@ -153,9 +174,11 @@ const Header = () => {
                   </li>
                 </ul>
               </li>
+
               <li>
-                <Link to="/hostelDetails">Hostels</Link>
+                <Link to="/Searchhostel">Hostels</Link>
               </li>
+
               <li>
                 <Link to="/Contactus">Contact</Link>
               </li>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 const HostelLogin = () => {
   const [ownername, setownername] = useState("");
   const [email, setemail] = useState("");
@@ -119,6 +120,9 @@ const HostelLogin = () => {
                           Clear
                         </a>
                       </div>
+                      <Link to="/HostelLogin" class="btn">
+                        Already have and account? Login
+                      </Link>
                     </div>
                   </form>
                 </div>

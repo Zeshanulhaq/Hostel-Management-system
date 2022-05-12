@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const Stdsignin = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const opt = {
@@ -28,7 +29,7 @@ const Stdsignin = () => {
       console.log("this came from the backend", data);
       localStorage.setItem("std_jwt_token", data.access_token);
 
-      return true;
+      return data.access_token && history.push("/");
     } catch (error) {
       console.error("there was an error logging in");
     }
@@ -68,13 +69,13 @@ const Stdsignin = () => {
                           onChange={(e) => setpassword(e.target.value)}
                         />
                       </div>
-                      <a
-                        href="index-2.html"
+                      <Link
+                        to="/Hostelprofile"
                         class="btn btn-login"
                         onClick={handleSubmit}
                       >
                         Login
-                      </a>
+                      </Link>
                     </fieldset>
                   </form>
                 </div>

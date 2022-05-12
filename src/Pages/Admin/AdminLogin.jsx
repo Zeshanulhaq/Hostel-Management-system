@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 // function Copyright(props) {
 //   return (
@@ -39,9 +40,7 @@ export default function AdminLogin() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
-  const onsignin = () => {
-    <Link to="/AdminDashboard"></Link>;
-  };
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +66,7 @@ export default function AdminLogin() {
       console.log("this came from the backend  of Admin", data);
       localStorage.setItem("admin_jwt", data.access_token);
 
-      return true;
+      return data.access_token && history.push("/All");
     } catch (error) {
       console.error("there was an error logging in");
     }
@@ -127,7 +126,6 @@ export default function AdminLogin() {
               label="Remember me"
             />
             <Button
-              onClick={onsignin}
               type="submit"
               fullWidth
               variant="contained"

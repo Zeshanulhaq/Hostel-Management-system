@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import AuthContext from "../store/auth-context";
 
 const HostelLogin = () => {
+  const history = useHistory();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
@@ -33,15 +34,17 @@ const HostelLogin = () => {
       console.log("this came from the backend", data);
       localStorage.setItem("jwt", data.access_token);
 
-      return true;
+      return data.access_token && history.push("/Hostelprofile");
     } catch (error) {
       console.error("there was an error logging in");
     }
   };
+
   const onClear = (e) => {
     setemail("");
     setpassword("");
   };
+
   // const isAuthenticated = sessionStorage.getItem("token");
   // console.log("page is authenticated", isAuthenticated);
   return (
@@ -99,6 +102,9 @@ const HostelLogin = () => {
                           clear
                         </a>
                       </div>
+                      <Link to="/HostelSignup" class="btn">
+                        Don't have an account ? Signup
+                      </Link>
                     </div>
                   </form>
                 </div>
