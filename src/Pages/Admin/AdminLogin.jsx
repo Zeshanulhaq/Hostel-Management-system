@@ -121,10 +121,10 @@ export default function AdminLogin() {
               value={password}
               onChange={(e) => setpassword(e.target.value)}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth

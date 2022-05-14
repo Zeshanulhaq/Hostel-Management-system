@@ -1,13 +1,18 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import bgimage from "../assets/img/banner-10.jpg";
 
 const Searchhostel = () => {
+  const std_jwt_token = localStorage.getItem("std_jwt_token");
+
   const [city, setcity] = useState("");
   const [hostelname, sethostelname] = useState("");
   const [hstldata, sethstldata] = useState("");
+  const [data, setdata] = useState("");
+  const [filterpressed, setfilterpressed] = useState(false);
 
   const handleSubmit = (e) => {
+    setfilterpressed(true);
     e.preventDefault();
     axios
       .post("/search/hostel", {
@@ -22,6 +27,20 @@ const Searchhostel = () => {
         console.error("There was an error!", error);
       });
   };
+
+  useEffect(() => {
+    axios
+      .get("get/hostel/list", {
+        headers: { Authorization: `Bearer ${std_jwt_token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        setdata(response.data.data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, [std_jwt_token]);
 
   return (
     <>
@@ -86,11 +105,56 @@ const Searchhostel = () => {
           </div>
           {/* <!-- Company Searrch Filter End --> */}
 
+          {!filterpressed && (
+            <div class="row extra-mrg">
+              {/* <!-- single item of hostel --> */}
+              {data.length > 0 &&
+                data.map((data) => (
+                  <div key={data.id} class="col-md-4 col-sm-6">
+                    <div class="grid-view brows-job-list">
+                      <div class="brows-job-company-img">
+                        <img src={data.image} class="img-responsive" alt="" />
+                      </div>
+                      <div class="brows-job-position">
+                        <h3>
+                          <a href="hostel_details.html">{data.hostel_name}</a>
+                        </h3>
+                        <p>
+                          <span>{data.hostel_phone}</span>
+                        </p>
+                      </div>
+                      <div class="job-position">
+                        <span class="job-num">{data.rem_seats}</span>
+                      </div>
+
+                      <ul class="grid-view-caption">
+                        <li>
+                          <div class="brows-job-location">
+                            <p>
+                              <i class="fa fa-map-marker"></i> {data.address}
+                            </p>
+                          </div>
+                        </li>
+                        <li>
+                          <p>
+                            <span class="brows-job-sallery">
+                              <i class="fa fa-phone"></i>hostel phone
+                            </span>
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              {/* <!-- end of hostel item --> */}
+            </div>
+          )}
+
           <a href="resume-detail.html" class="item-click">
             <article>
-              <div class="brows-resume">
-                {hstldata.length > 0 &&
-                  hstldata.map((row) => (
+              {hstldata.length > 0 &&
+                hstldata.map((row) => (
+                  <div class="brows-resume">
                     <div class="row no-mrg" key={row.id}>
                       <div class="col-md-2 col-sm-2">
                         <div class="brows-resume-pic">
@@ -123,8 +187,8 @@ const Searchhostel = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
-                {/* <div class="row extra-mrg row-skill">
+
+                    {/* <div class="row extra-mrg row-skill">
                   <div class="browse-resume-skills">
                     <div class="col-md-9 col-sm-8">
                       <div class="br-resume">
@@ -142,37 +206,10 @@ const Searchhostel = () => {
                     </div>
                   </div>
                 </div> */}
-              </div>
+                  </div>
+                ))}
             </article>
           </a>
-
-          <div class="row">
-            <ul class="pagination">
-              <li>
-                <a href="/">&laquo;</a>
-              </li>
-              <li class="active">
-                <a href="/">1</a>
-              </li>
-              <li>
-                <a href="/">2</a>
-              </li>
-              <li>
-                <a href="/">3</a>
-              </li>
-              <li>
-                <a href="/">4</a>
-              </li>
-              <li>
-                <a href="/">
-                  <i class="fa fa-ellipsis-h"></i>
-                </a>
-              </li>
-              <li>
-                <a href="/">&raquo;</a>
-              </li>
-            </ul>
-          </div>
         </div>
       </section>
     </>

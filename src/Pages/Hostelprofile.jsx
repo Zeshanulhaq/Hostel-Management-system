@@ -138,7 +138,7 @@ const Hostelprofile = () => {
                       {/* <!-- Start All Sec --> */}
                       <div className="tab-content">
                         {/* <!-- Start About Sec --> */}
-                        {console.log("page: ", address)}
+
                         {address === "about" ? (
                           <div className="tab-pane fade in active">
                             <h3>About hostel</h3>
