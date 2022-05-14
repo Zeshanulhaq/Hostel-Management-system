@@ -54,13 +54,13 @@ const Adminnav = () => {
   return (
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar open={open}>
         <Toolbar
           sx={{
             pr: "24px", // keep right padding when drawer closed
           }}
         >
-          <IconButton
+          {/* <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -71,7 +71,7 @@ const Adminnav = () => {
             }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             component="h1"
             variant="h6"

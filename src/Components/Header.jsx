@@ -19,6 +19,14 @@ const Header = () => {
     window.location.reload(false);
   };
 
+  const hstlowner = () => {
+    if (!hstl_jwt) {
+      history.push("/HostelLogin");
+    } else {
+      history.push("/Hostelprofile");
+    }
+    window.location.reload(false);
+  };
   return (
     <div>
       {/* Start Navigation  */}
@@ -50,9 +58,9 @@ const Header = () => {
                 </Link>
               </li>
 
-              <li className="left-br">
+              <li className="left-br" onClick={hstlowner}>
                 <Link
-                  to="/Hostelprofile"
+                  to="#"
                   data-toggle="modal"
                   data-target="#signup"
                   className="signin"
@@ -60,17 +68,29 @@ const Header = () => {
                   Hostel Owner
                 </Link>
               </li>
-
-              <li className="left-br">
-                <Link
-                  to="/AdminDashboard"
-                  data-toggle="modal"
-                  data-target="#signup"
-                  className="signin"
-                >
-                  Admin portal
-                </Link>
-              </li>
+              {hstl_jwt ? (
+                <li className="left-br" onClick={onhstllogout}>
+                  <Link
+                    to="/HostelLogin"
+                    data-toggle="modal"
+                    data-target="#signup"
+                    className="signin"
+                  >
+                    Hostel Logout
+                  </Link>
+                </li>
+              ) : (
+                <li className="left-br">
+                  <Link
+                    to="/HostelLogin"
+                    data-toggle="modal"
+                    data-target="#signup"
+                    className="signin"
+                  >
+                    Hostel Login
+                  </Link>
+                </li>
+              )}
             </ul>
             <ul
               className="nav navbar-nav navbar-right"
@@ -108,7 +128,7 @@ const Header = () => {
                           </ul>
                         </div>
                       </div>
-                      <div className="col-menu col-md-4">
+                      {/* <div className="col-menu col-md-4">
                         <h6 className="title">Hostel Owner</h6>
 
                         <div className="content">
@@ -144,8 +164,8 @@ const Header = () => {
                             )}
                           </ul>
                         </div>
-                      </div>
-                      <div className="col-menu col-md-4">
+                      </div> */}
+                      {/* <div className="col-menu col-md-4">
                         <h6 className="title">Admin Portal</h6>
 
                         <div className="content">
@@ -169,7 +189,7 @@ const Header = () => {
                             </li>
                           </ul>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </li>
                 </ul>

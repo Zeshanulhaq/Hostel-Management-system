@@ -2,7 +2,12 @@ import React from "react";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Home from "./Pages/Home";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  hashHistory,
+  Switch,
+} from "react-router-dom";
 import HostelLogin from "./Pages/HostelLogin";
 import HostelSignup from "./Pages/HostelSignup";
 import HostelDetails from "./Pages/HostelDetails";
@@ -24,22 +29,20 @@ import Approved from "./Pages/Admin/Approved";
 import AdminProfile from "./Pages/Admin/AdminProfile";
 
 import Error404 from "./Pages/Error404";
-import AdminLayout from "./Components/Layouts/AdminLayout";
 function App() {
   return (
     // <AdminDashboard />
     <Router>
       <Switch>
-        <Route path={["/AdminSignUp", "/AdminLogin"]}>
-          <AdminLayout>
-            <Switch>
-              <Route path="/AdminLogin" component={AdminLogin} />
-              <Route path="/AdminSignUp" component={AdminSignUp} />
-            </Switch>
-          </AdminLayout>
-        </Route>
-
-        <Route path={["/All", "/Approved", "/AdminProfile"]}>
+        <Route
+          path={[
+            "/All",
+            "/AdminSignUp",
+            "/Approved",
+            "/AdminProfile",
+            "/AdminLogin",
+          ]}
+        >
           <Layout>
             <Switch>
               <Route path="/All" component={All} />
@@ -48,22 +51,7 @@ function App() {
             </Switch>
           </Layout>
         </Route>
-
-        <Route
-          path={[
-            "/HostelLogin",
-            "/HostelSignup",
-            "/Hostelprofilebuild",
-            "/Hostelprofile",
-            "/Stdsignin",
-            "/StdsignUp",
-            "/Searchhostel",
-            "/Contactus",
-            "/GetHostelsList",
-            "/HostelSignup",
-            "/",
-          ]}
-        >
+        <Route path={["/HostelLogin", "/HostelSignup", "/"]}>
           <Main>
             <Route exact path="/" component={Home} />
             <Switch>
